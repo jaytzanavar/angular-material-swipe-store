@@ -1,0 +1,109 @@
+<form
+  action=""
+  class="form"
+  #form="ngForm"
+  (ngSubmit)="onSubmitForm(form)"
+  [ngFormOptions]="{ updateOn: 'blur' }"
+>
+  <pre>{{ userInfo | json }}</pre>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      [(ngModel)]="userInfo.firstName"
+      [ngModelOptions]="{ name: 'firstName', updateOn: 'blur' }"
+      name="firstName"
+      type="text"
+      #inputRef="ngModel"
+      id="name"
+      [ngClass]="[inputRef.dirty ? 'bg-red' : '']"
+      placeholder="Enter your name"
+    />
+  </mat-form-field>
+
+  <div class="form-field">
+    <label for="name">Last Name</label>
+    <input
+      [(ngModel)]="userInfo.lastName"
+      name="lastName"
+      type="text"
+      id="last"
+      placeholder="Enter your lastname"
+    />
+  </div>
+  <div class="form-field">
+    <label for="name">Email</label>
+    <input
+      type="email"
+      [(ngModel)]="userInfo.email"
+      name="email"
+      id="email"
+      placeholder="Enter your email"
+    />
+  </div>
+  <div class="form-field">
+    <label for="year">year of birth</label>
+    <select name="year" id="year">
+      <option value="1990">1990</option>
+      <option value="1991">1991</option>
+      <option value="1992">1992</option>
+      <option value="1993">1993</option>
+    </select>
+  </div>
+  <!-- <fieldset></fieldset> -->
+  <button mat-button>Save</button>
+</form>
+
+<div class="w-full">
+  <h2>Reactive</h2>
+
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-col w-1/6"
+  >
+    <pre>{{ registerForm.value | json }}</pre>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="name"
+        placeholder="Enter your name"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>password</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        placeholder="Enter your password"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="email"
+        placeholder="Enter your Email"
+        [class.invalid]="registerForm.get('email')?.invalid"
+      />
+      <mat-error>Email is invalid</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Select Role</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let role of roles" value="{{ role }}">{{
+          role.title
+        }}</mat-option>
+      </mat-select>
+      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+    </mat-form-field>
+    <!-- <fieldset></fieldset> -->
+    <button mat-button>Register</button>
+  </form>
+</div>
